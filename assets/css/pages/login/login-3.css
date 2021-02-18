@@ -1,0 +1,29 @@
+@media (min-width: 992px) {
+  .login.login-3 .login-aside {
+    width: 100%;
+    max-width: 600px; }
+  .login.login-3 .login-form {
+    width: 100%;
+    max-width: 450px; } }
+
+@media (min-width: 992px) and (max-width: 1399.98px) {
+  .login.login-3 .login-aside {
+    width: 100%;
+    max-width: 450px; } }
+
+@media (max-width: 991.98px) {
+  .login.login-3 .login-form {
+    width: 100%;
+    max-width: 400px; } }
+
+@media (max-width: 575.98px) {
+  .login.login-3 .login-form {
+    width: 100%;
+    max-width: 100%; } }
+.help-block{
+  color: red;
+}
+
+.has-error input{
+  border-color: red!important;
+}

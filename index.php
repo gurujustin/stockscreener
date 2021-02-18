@@ -1,31 +1,39 @@
 <?php
-// Initialize the session
-session_start();
- 
-// Check if the user is logged in, if not then redirect him to login page
-if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-    header("location: login.php");
-    exit;
+$title = 'Add Symbol';
+include_once 'header.php';
+if (isset($_GET['symbol_err'])){
+    $symbol_err = $_GET['symbol_err'];
+} else {
+    $symbol_err = "";
 }
-?>
- 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
-    <style type="text/css">
-        body{ font: 14px sans-serif; text-align: center; }
-    </style>
-</head>
-<body>
-    <div class="page-header">
-        <h1>Hi, <b><?php echo htmlspecialchars($_SESSION["username"]); ?></b>. Welcome to our site.</h1>
+
+?>                   
+<!--begin::Content-->
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+    <!--begin::Entry-->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class="container">
+            <div class="card card-custom gutter-b">
+                <div class="card-body">
+                    
+                    <form action="add-stock.php" method="post">
+                        <div class="form-group d-flex <?php echo (!empty($symbol_err)) ? 'has-error' : ''; ?>">
+                            <label class="mx-2 p-2">ITEM</label>
+                            <input type="text" class="form-control" placeholder="Enter Symbol" name="symbol"/>
+                            <button type="submit" class="btn btn-primary mx-2">Add</button>
+                        </div>
+                        <span class="help-block"><?php echo $symbol_err; ?></span>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--end::Container-->
     </div>
-    <p>
-        <a href="reset-password.php" class="btn btn-warning">Reset Your Password</a>
-        <a href="logout.php" class="btn btn-danger">Sign Out of Your Account</a>
-    </p>
-</body>
-</html>
+    <!--end::Entry-->
+</div>
+<!--end::Content-->
+<?php
+include_once 'footer.php';
+?>
