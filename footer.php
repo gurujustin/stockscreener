@@ -82,6 +82,7 @@
 		<!--begin::Page Scripts(used by this page)-->
 		<script src="assets/js/pages/crud/datatables/basic/scrollable.js"></script>
 		<script src="assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script>
+		<script src="assets/js/pages/crud/forms/widgets/select2.js"></script>
 		<!--end::Page Scripts-->
 	</body>
 	<!--end::Body-->

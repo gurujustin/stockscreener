@@ -17,7 +17,6 @@ $cnt = 0;
 <div class="container">
 	<div class="card card-custom gutter-b">
 		<div class="card-body">
-			
 			<form action="add-stock.php" method="post">
 				<div class="form-group d-flex">
 					<label class="mx-2 p-2">ITEM</label>
@@ -228,6 +227,61 @@ $cnt = 0;
 		</div>
 	</div>
 	<!--end::Card-->
+	<div class="card card-custom gutter-b">
+		<div class="card-body">
+			<form action="update-stock.php" method="post">
+				<input name="stockid" value="<?=$stock_id?>" hidden />
+				<div class="form-group">
+					<label class="mx-2 p-2">Trigger Price</label>
+					<input type="text" name="trigger_price" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label class="mx-2 p-2">Projection Price</label>
+					<input type="text" name="projection_price" class="form-control" />
+				</div>
+				<div class="form-group">
+					<label class="mx-2 p-2">Recommended</label>
+					<label class="checkbox checkbox-square checkbox-primary">
+						<input type="checkbox" checked="checked" name="recommended" />
+						<span></span>
+					</label>
+				</div>
+				<div class="form-group">
+					<label class="mx-2 p-2">Date Recommended</label>
+					<div class="input-group date mb-2">
+						<input type="text" class="form-control kt_datepicker_4_2" name="date_recommended" placeholder="mm/dd/yyyy" />
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i class="la la-clock-o"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="mx-2 p-2">Recommended Type</label>
+					<div>
+						<select class="form-control select2" id="kt_select2_3" name="param" multiple="multiple">
+							<option value="EY">EY</option>
+							<option value="TXT">TXT</option>
+							<option value="BREAK Thru">BREAK Thru</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="mx-2 p-2">Date Created</label>
+					<div class="input-group date mb-2">
+						<input type="text" class="form-control kt_datepicker_4_2" name="date_created" placeholder="mm/dd/yyyy" />
+						<div class="input-group-append">
+							<span class="input-group-text">
+								<i class="la la-clock-o"></i>
+							</span>
+						</div>
+					</div>
+				</div>
+				<button type="submit" class="btn btn-primary font-weight-bold">Save</button>
+			</form>
+		</div>
+	</div>
 </div>
 <!--end::Container-->
 </div>
