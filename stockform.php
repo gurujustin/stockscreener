@@ -14,6 +14,8 @@ $sum_price = 0;
 $cnt = 0;
 
 $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$stock_id'");
+$query3 = mysqli_query($link, "select * from gb_item_ed where stock_id='$stock_id'");
+$query4 = mysqli_query($link, "select * from gb_item_notes where stock_id='$stock_id'");
 ?>
 
 <!--begin::Container-->
@@ -80,7 +82,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 									<div class="form-group">
 										<label class="mx-2 p-2">Date</label>
 										<div class="input-group date mb-2">
-											<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" />
+											<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>"/>
 											<div class="input-group-append">
 												<span class="input-group-text">
 													<i class="la la-clock-o"></i>
@@ -246,7 +248,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 				<div class="form-group">
 					<label class="mx-2 p-2">Date Recommended</label>
 					<div class="input-group date mb-2">
-						<input type="text" class="form-control kt_datepicker_4_2" name="recom_date" placeholder="mm/dd/yyyy" />
+						<input type="text" class="form-control kt_datepicker_4_2" name="recom_date" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>"/>
 						<div class="input-group-append">
 							<span class="input-group-text">
 								<i class="la la-clock-o"></i>
@@ -257,7 +259,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 				<div class="form-group">
 					<label class="mx-2 p-2">Recommended Type</label>
 					<div>
-						<select class="form-control select2" id="kt_select2_3" name="param" multiple="multiple">
+						<select class="form-control select2" id="kt_select2_3" name="param[]" multiple="multiple">
 							<option value="EY">EY</option>
 							<option value="TXT">TXT</option>
 							<option value="BREAK Thru">BREAK Thru</option>
@@ -267,7 +269,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 				<div class="form-group">
 					<label class="mx-2 p-2">Date Created</label>
 					<div class="input-group date mb-2">
-						<input type="text" class="form-control kt_datepicker_4_2" name="date_created" placeholder="mm/dd/yyyy" />
+						<input type="text" class="form-control kt_datepicker_4_2" name="date_created" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>"/>
 						<div class="input-group-append">
 							<span class="input-group-text">
 								<i class="la la-clock-o"></i>
@@ -319,7 +321,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 									</div>
 									<div class="form-group">
 										<label class="mx-2 p-2">Rating</label>
-										<select class="form-control" name="type">
+										<select class="form-control" name="rating">
 											<option value="Good">Good</option>
 											<option value="Very Good">Very Good</option>
 											<option value="Excellent">Excellent</option>
@@ -333,7 +335,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 									<div class="form-group">
 										<label class="mx-2 p-2">Date</label>
 										<div class="input-group date mb-2">
-											<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" />
+											<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" value="<?=date("m/d/Y")?>"/>
 											<div class="input-group-append">
 												<span class="input-group-text">
 													<i class="la la-clock-o"></i>
@@ -372,7 +374,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 							<td><?=$row['company']?></td>
 							<td><?=$row['rating']?></td>
 							<td><?=$row['price_target']?></td>
-							<td>$<?=$row['date']?></td>
+							<td>$<?=$row['rate_date']?></td>
 							<td nowrap="nowrap">
 								<div class="dropdown dropdown-inline">
 									<a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details" data-toggle="modal" data-target="#ratingsModal<?=$row['id']?>">
@@ -386,7 +388,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 											</svg>
 										</span>
 									</a>
-									<a href="add-rating.php?tid=<?=$row['id']?>" class="btn btn-sm btn-clean btn-icon" title="Delete">
+									<a href="add-rating.php?ratingid=<?=$row['id']?>" class="btn btn-sm btn-clean btn-icon" title="Delete">
 										<span class="svg-icon svg-icon-md">
 											<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -432,7 +434,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 												<div class="form-group">
 													<label class="mx-2 p-2">Date</label>
 													<div class="input-group date mb-2">
-														<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" value="<?=$row['date']?>" />
+														<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" value="<?=$row['rate_date']?>" />
 														<div class="input-group-append">
 															<span class="input-group-text">
 																<i class="la la-clock-o"></i>
@@ -494,7 +496,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 									<div class="form-group">
 										<label class="mx-2 p-2">ED Date</label>
 										<div class="input-group date mb-2">
-											<input type="text" class="form-control kt_datepicker_4_2" name="ed_date" placeholder="mm/dd/yyyy" />
+											<input type="text" class="form-control kt_datepicker_4_2" name="ed_date" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>"/>
 											<div class="input-group-append">
 												<span class="input-group-text">
 													<i class="la la-clock-o"></i>
@@ -508,7 +510,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 									</div>
 									<div class="form-group">
 										<label class="mx-2 p-2">ED Chg%</label>
-										<input type="text" name="ed_change" class="form-control" />
+										<input type="text" name="ed_chg" class="form-control" />
 									</div>
 								</div>
 								<div class="modal-footer">
@@ -534,12 +536,12 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 					</tr>
 				</thead>
 				<tbody>
-					<?php while($row = mysqli_fetch_array($query2)) { 
+					<?php while($row = mysqli_fetch_array($query3)) { 
 					?>
 						<tr>
 							<td><?=$row['ed_date']?></td>
 							<td><?=$row['ed_price']?></td>
-							<td><?=$row['ed_change']?></td>
+							<td><?=$row['ed_chg']?></td>
 							<td nowrap="nowrap">
 								<div class="dropdown dropdown-inline">
 									<a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details" data-toggle="modal" data-target="#edsModal<?=$row['id']?>">
@@ -553,7 +555,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 											</svg>
 										</span>
 									</a>
-									<a href="add-ed.php?tid=<?=$row['id']?>" class="btn btn-sm btn-clean btn-icon" title="Delete">
+									<a href="add-ed.php?edid=<?=$row['id']?>" class="btn btn-sm btn-clean btn-icon" title="Delete">
 										<span class="svg-icon svg-icon-md">
 											<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -596,7 +598,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 												</div>
 												<div class="form-group">
 													<label class="mx-2 p-2">ED Chg%</label>
-													<input type="text" name="ed_change" class="form-control" value="<?=$row['ed_change']?>" />
+													<input type="text" name="ed_chg" class="form-control" value="<?=$row['ed_chg']?>" />
 												</div>
 											</div>
 											<div class="modal-footer">
@@ -652,7 +654,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 									<div class="form-group">
 										<label class="mx-2 p-2">Date</label>
 										<div class="input-group date mb-2">
-											<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" />
+											<input type="text" class="form-control kt_datepicker_4_2" name="notes_date" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>"/>
 											<div class="input-group-append">
 												<span class="input-group-text">
 													<i class="la la-clock-o"></i>
@@ -687,10 +689,10 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 					</tr>
 				</thead>
 				<tbody>
-					<?php while($row = mysqli_fetch_array($query2)) { 
+					<?php while($row = mysqli_fetch_array($query4)) { 
 					?>
 						<tr>
-							<td><?=$row['date']?></td>
+							<td><?=$row['notes_date']?></td>
 							<td><?=$row['notes']?></td>
 							<td nowrap="nowrap">
 								<div class="dropdown dropdown-inline">
@@ -705,7 +707,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 											</svg>
 										</span>
 									</a>
-									<a href="add-note.php?tid=<?=$row['id']?>" class="btn btn-sm btn-clean btn-icon" title="Delete">
+									<a href="add-note.php?noteid=<?=$row['id']?>" class="btn btn-sm btn-clean btn-icon" title="Delete">
 										<span class="svg-icon svg-icon-md">
 											<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 												<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
@@ -734,7 +736,7 @@ $query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$sto
 												<div class="form-group">
 													<label class="mx-2 p-2">Date</label>
 													<div class="input-group date mb-2">
-														<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" value="<?=$row['date']?>" />
+														<input type="text" class="form-control kt_datepicker_4_2" name="notes_date" placeholder="mm/dd/yyyy" value="<?=$row['notes_date']?>" />
 														<div class="input-group-append">
 															<span class="input-group-text">
 																<i class="la la-clock-o"></i>
