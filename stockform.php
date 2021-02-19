@@ -5,7 +5,10 @@ include_once "header.php";
 
 $stock_id = $_GET['stock_id'];
 $query = mysqli_query($link, "select * from gb_item where id='$stock_id'");
-$symbol = mysqli_fetch_array($query)['item'];
+$res = mysqli_fetch_array($query);
+$symbol = $res['item'];
+$param = explode(',', $res['recom_type']);
+$options = array('EY', 'TXT', 'BREAK Thru');
 
 $query1 = mysqli_query($link, "select * from gb_item_transactions where stock_id='$stock_id'");
 $qnty_hand = 0;
@@ -232,23 +235,23 @@ $query4 = mysqli_query($link, "select * from gb_item_notes where stock_id='$stoc
 				<input name="stockid" value="<?=$stock_id?>" hidden />
 				<div class="form-group">
 					<label class="mx-2 p-2">Trigger Price</label>
-					<input type="text" name="trigger_price" class="form-control" />
+					<input type="text" name="trigger_price" class="form-control" value="<?=$res['trigger_price']?>"/>
 				</div>
 				<div class="form-group">
 					<label class="mx-2 p-2">Projection Price</label>
-					<input type="text" name="projection_price" class="form-control" />
+					<input type="text" name="projection_price" class="form-control" value="<?=$res['projection_price']?>"/>
 				</div>
 				<div class="form-group">
 					<label class="mx-2 p-2">Recommended</label>
 					<label class="checkbox checkbox-square checkbox-primary">
-						<input type="checkbox" checked="checked" name="recommended" />
+						<input type="checkbox" <?php if($res['recommended'] == 'Y') { ?> checked <?php }?> name="recommended" />
 						<span></span>
 					</label>
 				</div>
 				<div class="form-group">
 					<label class="mx-2 p-2">Date Recommended</label>
 					<div class="input-group date mb-2">
-						<input type="text" class="form-control kt_datepicker_4_2" name="recom_date" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>"/>
+						<input type="text" class="form-control kt_datepicker_4_2" name="recom_date" placeholder="mm/dd/yyyy" value="<?=$res['recom_date'] == '' ? date('m/d/Y') : $res['recom_date']?>"/>
 						<div class="input-group-append">
 							<span class="input-group-text">
 								<i class="la la-clock-o"></i>
@@ -259,17 +262,21 @@ $query4 = mysqli_query($link, "select * from gb_item_notes where stock_id='$stoc
 				<div class="form-group">
 					<label class="mx-2 p-2">Recommended Type</label>
 					<div>
-						<select class="form-control select2" id="kt_select2_3" name="param[]" multiple="multiple">
-							<option value="EY">EY</option>
-							<option value="TXT">TXT</option>
-							<option value="BREAK Thru">BREAK Thru</option>
+						<select class="form-control select2" id="kt_select2_3" name="param[]" multiple="multiple" value="">
+							<?php foreach($options as $item) {
+								if(in_array($item, $param)){?>
+									<option value="<?=$item?>" selected><?=$item?></option>
+								<?php } else { ?>
+									<option value="<?=$item?>" ><?=$item?></option>
+								<?php }
+							} ?>
 						</select>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="mx-2 p-2">Date Created</label>
 					<div class="input-group date mb-2">
-						<input type="text" class="form-control kt_datepicker_4_2" name="date_created" placeholder="mm/dd/yyyy" value="<?=date('m/d/Y')?>"/>
+						<input type="text" class="form-control kt_datepicker_4_2" name="date_created" placeholder="mm/dd/yyyy" value="<?=$res['date_created'] == '' ? date('m/d/Y') : $res['date_created']?>"/>
 						<div class="input-group-append">
 							<span class="input-group-text">
 								<i class="la la-clock-o"></i>
