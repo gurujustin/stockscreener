@@ -35,9 +35,9 @@ if(isset($_POST['recommended'])){
 } else {
     $recommended = 'N';
 }
-$date_recommended = $_POST['date_recommended'];
-$recommended_type = $_POST['param'];
+$recom_date = $_POST['recom_date'];
+$recom_type = $_POST['param'];
 $date_created = $_POST['date_created'];
 
-return $recommended;
+echo $recom_type;
 ?>

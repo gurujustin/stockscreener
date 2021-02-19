@@ -4,16 +4,16 @@ $title = "Stock Form";
 include_once "header.php";
 
 $stock_id = $_GET['stock_id'];
-$query = mysqli_query($link, "select * from stocks where id='$stock_id'");
-$symbol = mysqli_fetch_array($query)['symbol'];
+$query = mysqli_query($link, "select * from gb_item where id='$stock_id'");
+$symbol = mysqli_fetch_array($query)['item'];
 
-$query1 = mysqli_query($link, "select * from transactions where stock_id='$stock_id'");
+$query1 = mysqli_query($link, "select * from gb_item_transactions where stock_id='$stock_id'");
 $qnty_hand = 0;
 $total_price = 0;
 $sum_price = 0;
 $cnt = 0;
 
-$query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'");
+$query2 = mysqli_query($link, "select * from gb_item_rating where stock_id='$stock_id'");
 ?>
 
 <!--begin::Container-->
@@ -77,10 +77,6 @@ $query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'"
 										<label class="mx-2 p-2">Price</label>
 										<input type="text" name="price" class="form-control" />
 									</div>
-									<!-- <div class="form-group">
-										<label class="mx-2 p-2">Total</label>
-										<input type="text" name="total" class="form-control" />
-									</div> -->
 									<div class="form-group">
 										<label class="mx-2 p-2">Date</label>
 										<div class="input-group date mb-2">
@@ -120,7 +116,7 @@ $query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'"
 				</thead>
 				<tbody>
 					<?php while($row = mysqli_fetch_array($query1)) { 
-						if ($row['type'] == 'Bought') {
+						if ($row['trans_type'] == 'Bought') {
 							$qnty_hand += $row['qnty'];
 							$sum_price += $row['qnty']*$row['price'];
 						} else {
@@ -132,11 +128,11 @@ $query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'"
 					?>
 						<tr>
 							<td><?=$row['id']?></td>
-							<td><?=$row['type']?></td>
+							<td><?=$row['trans_type']?></td>
 							<td><?=$row['qnty']?></td>
 							<td>$<?=$row['price']?></td>
 							<td>$<?=$row['total']?></td>
-							<td><?=$row['date']?></td>
+							<td><?=$row['trans_date']?></td>
 							<td nowrap="nowrap">
 								<div class="dropdown dropdown-inline">
 									<a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details" data-toggle="modal" data-target="#transactionModal<?=$row['id']?>">
@@ -179,8 +175,8 @@ $query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'"
 												<div class="form-group">
 													<label class="mx-2 p-2">Type</label>
 													<select class="form-control" name="type">
-														<option value="Bought" <?php if($row['type'] == 'Bought'){?> selected <?php }?>>Buy</option>
-														<option value="Sold" <?php if($row['type'] == 'Sold'){?> selected <?php }?>>Sell</option>
+														<option value="Bought" <?php if($row['trans_type'] == 'Bought'){?> selected <?php }?>>Buy</option>
+														<option value="Sold" <?php if($row['trans_type'] == 'Sold'){?> selected <?php }?>>Sell</option>
 													</select>
 												</div>
 												<div class="form-group">
@@ -191,14 +187,10 @@ $query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'"
 													<label class="mx-2 p-2">Price</label>
 													<input type="text" name="price" class="form-control" value="<?=$row['price']?>" />
 												</div>
-												<!-- <div class="form-group">
-													<label class="mx-2 p-2">Total</label>
-													<input type="text" name="total" class="form-control" />
-												</div> -->
 												<div class="form-group">
 													<label class="mx-2 p-2">Date</label>
 													<div class="input-group date mb-2">
-														<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" value="<?=$row['date']?>"/>
+														<input type="text" class="form-control kt_datepicker_4_2" name="date" placeholder="mm/dd/yyyy" value="<?=$row['trans_date']?>"/>
 														<div class="input-group-append">
 															<span class="input-group-text">
 																<i class="la la-clock-o"></i>
@@ -222,7 +214,7 @@ $query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'"
 					<td></td>
 					<td></td>
 					<td>Total: <?=$qnty_hand?></td>
-					<td>AVG: $<?=round($total_price/$cnt, 2)?></td>
+					<td>AVG: $<?=$cnt === 0 ? 0 : round($total_price/$cnt, 2)?></td>
 					<td>Total: $<?=$sum_price?></td>
 					<td></td>
 					<td></td>
@@ -254,7 +246,7 @@ $query2 = mysqli_query($link, "select * from ratings where stock_id='$stock_id'"
 				<div class="form-group">
 					<label class="mx-2 p-2">Date Recommended</label>
 					<div class="input-group date mb-2">
-						<input type="text" class="form-control kt_datepicker_4_2" name="date_recommended" placeholder="mm/dd/yyyy" />
+						<input type="text" class="form-control kt_datepicker_4_2" name="recom_date" placeholder="mm/dd/yyyy" />
 						<div class="input-group-append">
 							<span class="input-group-text">
 								<i class="la la-clock-o"></i>
