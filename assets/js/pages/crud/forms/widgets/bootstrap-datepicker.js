@@ -75,21 +75,21 @@ var KTBootstrapDatepicker = function () {
             templates: arrows
         });
 
-        $('.kt_datepicker_4_2').datepicker({
+        $('.kt_datepicker_4_3').datepicker({
             rtl: KTUtil.isRTL(),
             orientation: "top right",
             todayHighlight: true,
             templates: arrows
         });
 
-        $('#kt_datepicker_4_3').datepicker({
+        $('.kt_datepicker_4_4').datepicker({
             rtl: KTUtil.isRTL(),
             orientation: "bottom left",
             todayHighlight: true,
             templates: arrows
         });
 
-        $('#kt_datepicker_4_4').datepicker({
+        $('.kt_datepicker_4_2').datepicker({
             rtl: KTUtil.isRTL(),
             orientation: "bottom right",
             todayHighlight: true,

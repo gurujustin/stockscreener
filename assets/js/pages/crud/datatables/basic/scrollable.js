@@ -10,7 +10,7 @@ var KTDatatablesBasicScrollable = function() {
             scrollX: true,
             scrollCollapse: true,
             columnDefs: [{
-                    targets: 5,
+                    targets: -1,
                     title: 'Actions',
                     orderable: false,
 					width: '125px'
